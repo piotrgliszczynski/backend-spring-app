@@ -28,4 +28,9 @@ public class Customer {
   @Column(name = "PASSWORD")
   private String password;
 
+  public Customer(String email, String name, String password) {
+    this.email = email;
+    this.name = name;
+    this.password = password;
+  }
 }
