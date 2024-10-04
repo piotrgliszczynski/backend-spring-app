@@ -1,0 +1,4 @@
+rootProject.name = 'backend-spring-app'
+include 'data-service'
+include 'authentication-service'
+
