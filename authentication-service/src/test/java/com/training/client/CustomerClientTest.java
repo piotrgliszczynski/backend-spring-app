@@ -4,6 +4,7 @@ import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.google.gson.Gson;
 import com.training.domain.Customer;
+import com.training.domain.dto.CustomerDto;
 import feign.FeignException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -54,7 +55,6 @@ class CustomerClientTest {
   void shouldNotReturnCustomer() {
     // Given
     Customer customer = new Customer("test@test.com", "test");
-    String customerJson = new Gson().toJson(customer);
     wireMockServer.stubFor(
         WireMock.get(WireMock.urlPathTemplate("/api/customers/{email}"))
             .willReturn(WireMock.badRequest()));
@@ -64,6 +64,44 @@ class CustomerClientTest {
 
     // Then
     assertThrows(FeignException.BadRequest.class, executable);
+  }
+
+  @Test
+  void shouldReturnCustomer_AfterCreation() {
+    // Given
+    CustomerDto customerDto = new CustomerDto("test", "test@test.com", "test");
+    String customerJson = new Gson().toJson(customerDto);
+    wireMockServer.stubFor(
+        WireMock.post(WireMock.urlPathMatching("/api/customers"))
+            .withRequestBody(WireMock.equalToJson(customerJson))
+            .willReturn(WireMock.okJson(customerJson)));
+
+    // When
+    CustomerDto responseCustomer = client.createCustomer(customerDto);
+
+    // Then
+    assertAll(
+        () -> assertEquals(customerDto.getName(), responseCustomer.getName()),
+        () -> assertEquals(customerDto.getEmail(), responseCustomer.getEmail()),
+        () -> assertEquals(customerDto.getPassword(), responseCustomer.getPassword())
+    );
+  }
+
+  @Test
+  void shouldThrow_WhenCustomerExists() {
+    // Given
+    CustomerDto customerDto = new CustomerDto("test", "test@test.com", "test");
+    String customerJson = new Gson().toJson(customerDto);
+    wireMockServer.stubFor(
+        WireMock.post(WireMock.urlPathMatching("/api/customers"))
+            .withRequestBody(WireMock.equalToJson(customerJson))
+            .willReturn(WireMock.badRequest()));
+
+    // When
+    Executable executable = () -> client.createCustomer(customerDto);
+
+    // Then
+    assertThrows(FeignException.class, executable);
   }
 
   @EnableFeignClients(clients = CustomerClient.class)
