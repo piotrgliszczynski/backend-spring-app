@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.training.domain.Customer;
 import com.training.domain.dto.CustomerDto;
 import com.training.exception.DuplicateElementsException;
+import com.training.exception.ElementNotFoundException;
 import com.training.mapper.CustomerMapper;
 import com.training.service.CustomerService;
 import org.hamcrest.Matchers;
@@ -72,6 +73,38 @@ class CustomerControllerTest {
             .queryParam("name_like", customer1.getName()))
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)));
+  }
+
+  @Test
+  void getByEmail() throws Exception {
+    // Given
+    Customer customer1 = new Customer(1, "test@test.com", "test1", "test1");
+    CustomerDto customerDto1 = new CustomerDto(1, "test@test.com", "test1", "test1");
+
+    when(service.getCustomerByEmail(customer1.getEmail())).thenReturn(customer1);
+    when(mapper.mapToDto(customer1)).thenReturn(customerDto1);
+
+    // When + Then
+    mockMvc.perform(MockMvcRequestBuilders
+            .get(URL + "/{email}", customer1.getEmail()))
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.is(customer1.getName())))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.email", Matchers.is(customer1.getEmail())))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.password", Matchers.is(customer1.getPassword())));
+  }
+
+  @Test
+  void getByEmail_ThrowWhenNotExists() throws Exception {
+    // Given
+    Customer customer1 = new Customer(1, "test@test.com", "test1", "test1");
+
+    when(service.getCustomerByEmail(customer1.getEmail())).thenThrow(new ElementNotFoundException("Test message"));
+
+    // When + Then
+    mockMvc.perform(MockMvcRequestBuilders
+            .get(URL + "/{email}", customer1.getEmail()))
+        .andExpect(MockMvcResultMatchers.status().isBadRequest())
+        .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.is("Test message")));
   }
 
   @Test
