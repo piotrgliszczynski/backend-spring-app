@@ -2,6 +2,7 @@ package com.training.service;
 
 import com.training.client.CustomerClient;
 import com.training.domain.Customer;
+import com.training.domain.dto.CustomerDto;
 import feign.FeignException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,37 @@ class CustomerClientServiceTest {
 
     // When
     Optional<Customer> foundCustomer = service.getCustomerByEmail(customer.getEmail());
+
+    // Then
+    assertTrue(foundCustomer.isEmpty());
+  }
+
+  @Test
+  void shouldCreateCustomer() {
+    // Given
+    CustomerDto customer = new CustomerDto("test", "test@test.com", "test");
+    when(client.createCustomer(customer)).thenReturn(customer);
+
+    // When
+    Optional<CustomerDto> foundCustomer = service.createCustomer(customer);
+
+    // Then
+    assertTrue(foundCustomer.isPresent());
+    assertAll(
+        () -> assertEquals(customer.getName(), foundCustomer.get().getName()),
+        () -> assertEquals(customer.getEmail(), foundCustomer.get().getEmail()),
+        () -> assertEquals(customer.getPassword(), foundCustomer.get().getPassword())
+    );
+  }
+
+  @Test
+  void shouldCreateEmptyCustomer() {
+    // Given
+    CustomerDto customer = new CustomerDto("test", "test@test.com", "test");
+    when(client.createCustomer(customer)).thenThrow(FeignException.BadRequest.class);
+
+    // When
+    Optional<CustomerDto> foundCustomer = service.createCustomer(customer);
 
     // Then
     assertTrue(foundCustomer.isEmpty());
