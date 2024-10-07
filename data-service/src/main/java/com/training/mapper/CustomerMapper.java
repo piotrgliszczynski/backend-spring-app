@@ -1,7 +1,7 @@
 package com.training.mapper;
 
 import com.training.domain.Customer;
-import com.training.domain.CustomerDto;
+import com.training.domain.dto.CustomerDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
