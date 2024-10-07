@@ -3,6 +3,7 @@ package com.training.controller;
 import com.training.domain.Customer;
 import com.training.domain.dto.CustomerDto;
 import com.training.exception.DuplicateElementsException;
+import com.training.exception.ElementNotFoundException;
 import com.training.mapper.CustomerMapper;
 import com.training.service.CustomerService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,14 @@ public class CustomerController {
     List<Customer> foundCustomers = service.getAllCustomers(nameFilter);
     List<CustomerDto> mappedCustomers = mapper.mapToDtoList(foundCustomers);
     return ResponseEntity.ok(mappedCustomers);
+  }
+
+  @GetMapping("{email}")
+  public ResponseEntity<CustomerDto> getCustomerByEmail(@PathVariable String email)
+      throws ElementNotFoundException {
+    Customer foundCustomer = service.getCustomerByEmail(email);
+    CustomerDto mappedCustomer = mapper.mapToDto(foundCustomer);
+    return ResponseEntity.ok(mappedCustomer);
   }
 
   @PostMapping
