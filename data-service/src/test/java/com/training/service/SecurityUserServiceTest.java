@@ -2,6 +2,7 @@ package com.training.service;
 
 import com.training.domain.Customer;
 import com.training.exception.ElementNotFoundException;
+import com.training.security.SecurityUserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
