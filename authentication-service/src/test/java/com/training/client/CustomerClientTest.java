@@ -21,6 +21,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(classes = CustomerClientTest.FeignConfig.class)
 class CustomerClientTest {
 
+  private final static String TOKEN = "12345";
+
   public static WireMockServer wireMockServer;
 
   @Autowired
@@ -42,7 +44,7 @@ class CustomerClientTest {
             .willReturn(WireMock.okJson(customerJson)));
 
     // When
-    Customer responseCustomer = client.getCustomerByEmail(customer.getEmail());
+    Customer responseCustomer = client.getCustomerByEmail(customer.getEmail(), TOKEN);
 
     // Then
     assertAll(
@@ -60,7 +62,7 @@ class CustomerClientTest {
             .willReturn(WireMock.badRequest()));
 
     // When
-    Executable executable = () -> client.getCustomerByEmail(customer.getEmail());
+    Executable executable = () -> client.getCustomerByEmail(customer.getEmail(), TOKEN);
 
     // Then
     assertThrows(FeignException.BadRequest.class, executable);
@@ -77,7 +79,7 @@ class CustomerClientTest {
             .willReturn(WireMock.okJson(customerJson)));
 
     // When
-    CustomerDto responseCustomer = client.createCustomer(customerDto);
+    CustomerDto responseCustomer = client.createCustomer(customerDto, TOKEN);
 
     // Then
     assertAll(
@@ -98,7 +100,7 @@ class CustomerClientTest {
             .willReturn(WireMock.badRequest()));
 
     // When
-    Executable executable = () -> client.createCustomer(customerDto);
+    Executable executable = () -> client.createCustomer(customerDto, TOKEN);
 
     // Then
     assertThrows(FeignException.class, executable);
