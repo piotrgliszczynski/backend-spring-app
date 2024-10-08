@@ -2,6 +2,7 @@ package com.training.mapper;
 
 import com.training.domain.Customer;
 import com.training.domain.dto.CustomerDto;
+import com.training.domain.dto.RegistrationCustomerDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +22,14 @@ public class CustomerMapper {
         customer.getEmail(),
         customer.getName(),
         customer.getPassword()
+    );
+  }
+
+  public RegistrationCustomerDto mapToRegistrationDto(Customer customer) {
+    return new RegistrationCustomerDto(
+        customer.getId(),
+        customer.getName(),
+        customer.getEmail()
     );
   }
 

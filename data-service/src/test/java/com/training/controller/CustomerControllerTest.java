@@ -1,11 +1,13 @@
 package com.training.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.training.domain.Customer;
 import com.training.domain.dto.CustomerDto;
 import com.training.exception.DuplicateElementsException;
 import com.training.exception.ElementNotFoundException;
 import com.training.mapper.CustomerMapper;
+import com.training.mapper.LocalDateTimeTypeAdapter;
 import com.training.service.CustomerService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,6 +26,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -36,7 +39,9 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 class CustomerControllerTest {
 
   private final static String URL = "/api/customers";
-  private final Gson gson = new Gson();
+  private final static Gson GSON = new GsonBuilder()
+      .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
+      .create();
 
   private MockMvc mockMvc;
   @Autowired
@@ -143,7 +148,7 @@ class CustomerControllerTest {
     mockMvc.perform(MockMvcRequestBuilders
             .post(URL)
             .contentType(MediaType.APPLICATION_JSON)
-            .content(gson.toJson(customer1)))
+            .content(GSON.toJson(customer1)))
         .andExpect(MockMvcResultMatchers.status().isCreated())
         .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(customer1.getId())))
         .andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.is(customer1.getName())))
@@ -166,7 +171,7 @@ class CustomerControllerTest {
     mockMvc.perform(MockMvcRequestBuilders
             .post(URL)
             .contentType(MediaType.APPLICATION_JSON)
-            .content(gson.toJson(customer1)))
+            .content(GSON.toJson(customer1)))
         .andExpect(MockMvcResultMatchers.status().isBadRequest())
         .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.containsString("already exists!")));
   }
@@ -185,7 +190,7 @@ class CustomerControllerTest {
     mockMvc.perform(MockMvcRequestBuilders
             .put(URL)
             .contentType(MediaType.APPLICATION_JSON)
-            .content(gson.toJson(customer1)))
+            .content(GSON.toJson(customer1)))
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(customer1.getId())))
         .andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.is(customer1.getName())))
