@@ -12,6 +12,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -26,7 +28,7 @@ class CustomerClientServiceTest {
   void shouldFetchCustomer() {
     // Given
     Customer customer = new Customer("test@test.com", "test");
-    when(client.getCustomerByEmail(customer.getEmail())).thenReturn(customer);
+    when(client.getCustomerByEmail(eq(customer.getEmail()), any())).thenReturn(customer);
 
     // When
     Optional<Customer> foundCustomer = service.getCustomerByEmail(customer.getEmail());
@@ -43,7 +45,7 @@ class CustomerClientServiceTest {
   void shouldFetchEmptyCustomer() {
     // Given
     Customer customer = new Customer("test@test.com", "test");
-    when(client.getCustomerByEmail(customer.getEmail()))
+    when(client.getCustomerByEmail(eq(customer.getEmail()), any()))
         .thenThrow(FeignException.BadRequest.class);
 
     // When
@@ -57,7 +59,7 @@ class CustomerClientServiceTest {
   void shouldCreateCustomer() {
     // Given
     CustomerDto customer = new CustomerDto("test", "test@test.com", "test");
-    when(client.createCustomer(customer)).thenReturn(customer);
+    when(client.createCustomer(eq(customer), any())).thenReturn(customer);
 
     // When
     Optional<CustomerDto> foundCustomer = service.createCustomer(customer);
@@ -75,7 +77,7 @@ class CustomerClientServiceTest {
   void shouldCreateEmptyCustomer() {
     // Given
     CustomerDto customer = new CustomerDto("test", "test@test.com", "test");
-    when(client.createCustomer(customer)).thenThrow(FeignException.BadRequest.class);
+    when(client.createCustomer(eq(customer), any())).thenThrow(FeignException.BadRequest.class);
 
     // When
     Optional<CustomerDto> foundCustomer = service.createCustomer(customer);
