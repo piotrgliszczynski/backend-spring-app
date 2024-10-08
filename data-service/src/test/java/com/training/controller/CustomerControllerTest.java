@@ -8,35 +8,53 @@ import com.training.exception.ElementNotFoundException;
 import com.training.mapper.CustomerMapper;
 import com.training.service.CustomerService;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
-@SpringJUnitWebConfig
-@WebMvcTest(CustomerController.class)
+@ExtendWith(SpringExtension.class)
+@WebAppConfiguration
+@SpringBootTest
 class CustomerControllerTest {
 
   private final static String URL = "/api/customers";
   private final Gson gson = new Gson();
-  @Autowired
+
   private MockMvc mockMvc;
+  @Autowired
+  private WebApplicationContext context;
   @MockBean
   private CustomerService service;
   @MockBean
   private CustomerMapper mapper;
 
+  @BeforeEach
+  void securitySetup() {
+    mockMvc = MockMvcBuilders.webAppContextSetup(context)
+        .apply(springSecurity()).
+        build();
+  }
+
   @Test
+  @WithMockUser(username = "test@test.com", password = "test")
   void getAll_WithoutFilter() throws Exception {
     // Given
     Customer customer1 = new Customer(1, "test@test.com", "test1", "test1");
@@ -57,6 +75,7 @@ class CustomerControllerTest {
   }
 
   @Test
+  @WithMockUser(username = "test@test.com", password = "test")
   void getAll_WithFilter() throws Exception {
     // Given
     Customer customer1 = new Customer(1, "test@test.com", "test1", "test1");
@@ -76,6 +95,7 @@ class CustomerControllerTest {
   }
 
   @Test
+  @WithMockUser(username = "test@test.com", password = "test")
   void getByEmail() throws Exception {
     // Given
     Customer customer1 = new Customer(1, "test@test.com", "test1", "test1");
@@ -94,6 +114,7 @@ class CustomerControllerTest {
   }
 
   @Test
+  @WithMockUser(username = "test@test.com", password = "test")
   void getByEmail_ThrowWhenNotExists() throws Exception {
     // Given
     Customer customer1 = new Customer(1, "test@test.com", "test1", "test1");
@@ -108,6 +129,7 @@ class CustomerControllerTest {
   }
 
   @Test
+  @WithMockUser(username = "test@test.com", password = "test")
   void createCustomer() throws Exception {
     // Given
     Customer customer1 = new Customer(1, "test@test.com", "test1", "test1");
@@ -130,6 +152,7 @@ class CustomerControllerTest {
   }
 
   @Test
+  @WithMockUser(username = "test@test.com", password = "test")
   void createCustomer_DuplicateCustomer() throws Exception {
     // Given
     Customer customer1 = new Customer(1, "test@test.com", "test1", "test1");
@@ -149,6 +172,7 @@ class CustomerControllerTest {
   }
 
   @Test
+  @WithMockUser(username = "test@test.com", password = "test")
   void updateCustomer() throws Exception {    // Given
     Customer customer1 = new Customer(1, "test@test.com", "test1", "test1");
     CustomerDto customerDto1 = new CustomerDto(1, "test@test.com", "test1", "test1");
@@ -170,6 +194,7 @@ class CustomerControllerTest {
   }
 
   @Test
+  @WithMockUser(username = "test@test.com", password = "test")
   void deleteCustomer() throws Exception {
     // Given
     int id = 1;
