@@ -16,7 +16,9 @@ import java.util.List;
 public class Event {
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(generator = "event_seq")
+  @SequenceGenerator(name = "event_seq", sequenceName = "EVENT_SEQ", initialValue = 100,
+      allocationSize = 1)
   @Column(name = "ID", unique = true)
   private int id;
 
