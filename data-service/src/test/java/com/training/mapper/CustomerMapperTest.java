@@ -2,6 +2,7 @@ package com.training.mapper;
 
 import com.training.domain.Customer;
 import com.training.domain.dto.CustomerDto;
+import com.training.domain.dto.RegistrationCustomerDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,20 @@ class CustomerMapperTest {
         () -> assertEquals(customer.getEmail(), actualCustomer.getEmail()),
         () -> assertEquals(customer.getName(), actualCustomer.getName()),
         () -> assertEquals(customer.getPassword(), actualCustomer.getPassword())
+    );
+  }
+
+  @Test
+  void mapToRegistrationDto() {
+    // Given
+
+    // When
+    RegistrationCustomerDto registrationCustomer = mapper.mapToRegistrationDto(customer);
+
+    // Then
+    assertAll(
+        () -> assertEquals(customer.getName(), registrationCustomer.getName()),
+        () -> assertEquals(customer.getEmail(), registrationCustomer.getEmail())
     );
   }
 }
