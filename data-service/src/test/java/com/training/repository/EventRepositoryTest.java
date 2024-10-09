@@ -95,4 +95,40 @@ public class EventRepositoryTest {
     // Cleanup
     repository.deleteById(id);
   }
+
+  @Test
+  void findById() {
+    // Given
+    Event event = new Event("test", LocalDateTime.now());
+    repository.save(event);
+    int id = event.getId();
+
+    // When
+    Optional<Event> savedEvent = repository.findById(id);
+
+    // Then
+    assertTrue(savedEvent.isPresent());
+    assertAll(
+        () -> assertEquals(event.getName(), savedEvent.get().getName())
+    );
+
+    // Cleanup
+    repository.deleteById(id);
+  }
+
+  @Test
+  void findById_ShouldBeEmptyWhenEventNotSaved() {
+    // Given
+    Event event = new Event(1, "test", LocalDateTime.now());
+    int id = event.getId();
+
+    // When
+    Optional<Event> savedEvent = repository.findById(id);
+
+    // Then
+    assertFalse(savedEvent.isPresent());
+
+    // Cleanup
+    repository.deleteById(id);
+  }
 }

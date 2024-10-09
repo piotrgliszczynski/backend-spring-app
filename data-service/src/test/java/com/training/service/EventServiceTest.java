@@ -1,17 +1,21 @@
 package com.training.service;
 
 import com.training.domain.Event;
+import com.training.exception.ElementNotFoundException;
 import com.training.repository.EventRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -76,5 +80,29 @@ class EventServiceTest {
 
     // Then
     verify(repository, times(1)).deleteById(1);
+  }
+
+  @Test
+  void getById() throws ElementNotFoundException {
+    // Given
+    when(repository.findById(event.getId())).thenReturn(Optional.of(event));
+
+    // When
+    Event foundEvent = service.getById(event.getId());
+
+    // Then
+    assertEquals(event.getName(), foundEvent.getName());
+  }
+
+  @Test
+  void getById_ThrowsWhenEmpty() {
+    // Given
+    when(repository.findById(event.getId())).thenReturn(Optional.empty());
+
+    // When
+    Executable executable = () -> service.getById(event.getId());
+
+    // Then
+    assertThrows(ElementNotFoundException.class, executable);
   }
 }
