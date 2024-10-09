@@ -1,6 +1,7 @@
 package com.training.service;
 
 import com.training.domain.Event;
+import com.training.exception.ElementNotFoundException;
 import com.training.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,11 @@ public class EventService {
 
   public void deleteById(int id) {
     repository.deleteById(id);
+  }
+
+  public Event getById(int eventId) throws ElementNotFoundException {
+    return repository.findById(eventId)
+        .orElseThrow(() -> new ElementNotFoundException("Event with id " + eventId + " not found"));
   }
 
   public List<Event> getAllEvents() {

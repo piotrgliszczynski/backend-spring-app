@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -60,5 +61,36 @@ class RegistrationMapperTest {
         () -> assertEquals(registration.getEvent().getName(),
             registrationDto.getEvent().getName())
     );
+  }
+
+  @Test
+  void mapToDtoList() {
+    // Given
+    Customer customer1 = new Customer(1, "test1@test.com", "test1", "test1");
+    Customer customer2 = new Customer(2, "test2@test.com", "test2", "test2");
+    RegistrationCustomerDto customerDto1 =
+        new RegistrationCustomerDto(1, "test1", "test1@test.com");
+    RegistrationCustomerDto customerDto2 =
+        new RegistrationCustomerDto(2, "test2", "test2@test.com");
+    when(customerMapper.mapToRegistrationDto(customer1)).thenReturn(customerDto1);
+    when(customerMapper.mapToRegistrationDto(customer2)).thenReturn(customerDto2);
+
+    Event event1 = new Event(1, "test1", LocalDateTime.now());
+    Event event2 = new Event(2, "test2", LocalDateTime.now());
+    EventDto eventDto1 = new EventDto(1, "test1", LocalDateTime.now());
+    EventDto eventDto2 = new EventDto(2, "test2", LocalDateTime.now());
+    when(eventMapper.mapToDto(event1)).thenReturn(eventDto1);
+    when(eventMapper.mapToDto(event2)).thenReturn(eventDto2);
+
+    List<Registration> registrations = List.of(
+        new Registration(customer1, event1),
+        new Registration(customer2, event2)
+    );
+
+    // When
+    List<RegistrationDto> registrationDtos = mapper.mapToDtoList(registrations);
+
+    // Then
+    assertEquals(registrations.size(), registrationDtos.size());
   }
 }
