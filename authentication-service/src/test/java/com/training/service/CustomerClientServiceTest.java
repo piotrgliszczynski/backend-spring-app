@@ -1,0 +1,55 @@
+package com.training.service;
+
+import com.training.client.CustomerClient;
+import com.training.domain.Customer;
+import feign.FeignException;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+
+@SpringBootTest
+class CustomerClientServiceTest {
+
+  @Autowired
+  private CustomerClientService service;
+  @MockBean
+  private CustomerClient client;
+
+  @Test
+  void shouldFetchCustomer() {
+    // Given
+    Customer customer = new Customer("test@test.com", "test");
+    when(client.getCustomerByEmail(customer.getEmail())).thenReturn(customer);
+
+    // When
+    Optional<Customer> foundCustomer = service.getCustomerByEmail(customer.getEmail());
+
+    // Then
+    assertTrue(foundCustomer.isPresent());
+    assertAll(
+        () -> assertEquals(customer.getEmail(), foundCustomer.get().getEmail()),
+        () -> assertEquals(customer.getPassword(), foundCustomer.get().getPassword())
+    );
+  }
+
+  @Test
+  void shouldFetchEmptyCustomer() {
+    // Given
+    Customer customer = new Customer("test@test.com", "test");
+    when(client.getCustomerByEmail(customer.getEmail()))
+        .thenThrow(FeignException.BadRequest.class);
+
+    // When
+    Optional<Customer> foundCustomer = service.getCustomerByEmail(customer.getEmail());
+
+    // Then
+    assertTrue(foundCustomer.isEmpty());
+  }
+
+}

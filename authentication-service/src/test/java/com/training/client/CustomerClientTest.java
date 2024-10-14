@@ -4,8 +4,10 @@ import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.google.gson.Gson;
 import com.training.domain.Customer;
+import feign.FeignException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,8 +15,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Configuration;
 
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = CustomerClientTest.FeignConfig.class)
 class CustomerClientTest {
@@ -47,6 +48,22 @@ class CustomerClientTest {
         () -> assertEquals(customer.getEmail(), responseCustomer.getEmail()),
         () -> assertEquals(customer.getPassword(), responseCustomer.getPassword())
     );
+  }
+
+  @Test
+  void shouldNotReturnCustomer() {
+    // Given
+    Customer customer = new Customer("test@test.com", "test");
+    String customerJson = new Gson().toJson(customer);
+    wireMockServer.stubFor(
+        WireMock.get(WireMock.urlPathTemplate("/api/customers/{email}"))
+            .willReturn(WireMock.badRequest()));
+
+    // When
+    Executable executable = () -> client.getCustomerByEmail(customer.getEmail());
+
+    // Then
+    assertThrows(FeignException.BadRequest.class, executable);
   }
 
   @EnableFeignClients(clients = CustomerClient.class)
