@@ -1,7 +1,8 @@
-package com.training.service;
+package com.training.security;
 
 import com.training.domain.Customer;
 import com.training.exception.ElementNotFoundException;
+import com.training.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

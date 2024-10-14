@@ -30,7 +30,13 @@ public class JwtService {
   private String apiUser;
 
   public UserDetails buildUser(String token) throws ElementNotFoundException {
-    Customer customer = service.getCustomerByEmail(getUser(token));
+    String user = getUser(token);
+
+    if (user.equals(apiUser)) {
+      return new User(apiUser, apiUser, Collections.emptyList());
+    }
+
+    Customer customer = service.getCustomerByEmail(user);
     return new User(customer.getEmail(), customer.getPassword(), Collections.emptyList());
   }
 
