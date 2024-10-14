@@ -13,12 +13,16 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CustomerClientService {
 
+  private final static String BEARER = "Bearer";
+
   private final CustomerClient client;
+  private final JwtService jwtService;
 
   public Optional<Customer> getCustomerByEmail(String email) {
+    String token = jwtService.createApiToken();
     Customer customer = null;
     try {
-      customer = client.getCustomerByEmail(email);
+      customer = client.getCustomerByEmail(email, createAuthorizationHeader(token));
     } catch (FeignException ex) {
       System.out.println(ex.getMessage());
     }
@@ -26,14 +30,18 @@ public class CustomerClientService {
   }
 
   public Optional<CustomerDto> createCustomer(CustomerDto customerDto) {
+    String token = jwtService.createApiToken();
     CustomerDto customer = null;
     try {
-      customer = client.createCustomer(customerDto);
+      customer = client.createCustomer(customerDto, createAuthorizationHeader(token));
     } catch (FeignException ex) {
       System.out.println(ex.getMessage());
     }
     return Optional.ofNullable(customer);
   }
 
+  private String createAuthorizationHeader(String token) {
+    return BEARER + " " + token;
+  }
 
 }
