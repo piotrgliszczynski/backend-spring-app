@@ -23,7 +23,7 @@ public class CustomerService {
     String filter = optionalNameFilter.orElse("");
 
     return customers.stream()
-        .filter(customer -> customer.getName().contains(filter))
+        .filter(customer -> customer.getName().contains(filter.toLowerCase()))
         .toList();
   }
 
@@ -37,14 +37,12 @@ public class CustomerService {
   }
 
   public Customer createCustomer(Customer customer) throws DuplicateElementsException {
-    Customer createdCustomer = null;
     try {
-      createdCustomer = repository.save(customer);
+      return repository.save(customer);
     } catch (DataIntegrityViolationException e) {
       throw new DuplicateElementsException(
           "The customer with email " + customer.getEmail() + " already exists!");
     }
-    return createdCustomer;
   }
 
   public Customer updateCustomer(Customer customer) {
