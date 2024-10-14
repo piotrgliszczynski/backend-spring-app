@@ -14,7 +14,9 @@ import lombok.NoArgsConstructor;
 public class Customer {
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(generator = "customer_seq")
+  @SequenceGenerator(name = "customer_seq", sequenceName = "CUSTOMER_SEQ", initialValue = 1000,
+      allocationSize = 1)
   @NotNull
   @Column(name = "ID", unique = true)
   private Integer id;
