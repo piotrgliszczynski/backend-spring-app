@@ -1,4 +1,4 @@
-package com.training.domain;
+package com.training.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,5 +13,5 @@ public class CustomerDto {
   private String email;
   private String name;
   private String password;
-  
+
 }

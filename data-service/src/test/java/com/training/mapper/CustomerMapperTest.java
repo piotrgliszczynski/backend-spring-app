@@ -1,7 +1,7 @@
 package com.training.mapper;
 
 import com.training.domain.Customer;
-import com.training.domain.CustomerDto;
+import com.training.domain.dto.CustomerDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
