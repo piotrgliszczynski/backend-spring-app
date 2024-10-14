@@ -1,6 +1,7 @@
 package com.training.config;
 
 import com.training.exception.DuplicateElementsException;
+import com.training.exception.ElementNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -16,6 +17,11 @@ public class GlobalHttpExceptionHandler extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler(DuplicateElementsException.class)
   public ResponseEntity<Object> handleDuplicateElementsException(DuplicateElementsException ex) {
+    return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(ElementNotFoundException.class)
+  public ResponseEntity<Object> handleElementNotFoundException(ElementNotFoundException ex) {
     return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
   }
 
