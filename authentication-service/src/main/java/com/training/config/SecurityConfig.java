@@ -1,9 +1,12 @@
 package com.training.config;
 
+import com.training.security.FeignAuthenticationProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -18,13 +21,20 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
+  @Autowired
+  private FeignAuthenticationProvider feignAuthenticationProvider;
+
   @Bean
   SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.csrf(AbstractHttpConfigurer::disable)
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
         .authorizeHttpRequests(requests -> requests
-            .requestMatchers("/**")
-            .permitAll());
+            .requestMatchers("/account", "/account/register")
+            .permitAll()
+            .requestMatchers("/account/token")
+            .authenticated())
+        .httpBasic(Customizer.withDefaults())
+        .authenticationProvider(feignAuthenticationProvider);
     return http.build();
   }
 

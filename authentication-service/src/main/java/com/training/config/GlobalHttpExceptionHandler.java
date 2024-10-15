@@ -15,4 +15,6 @@ public class GlobalHttpExceptionHandler extends ResponseEntityExceptionHandler {
   protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
     return new ResponseEntity<>(ex.getMessage(), status);
   }
+
+
 }
