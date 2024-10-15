@@ -5,15 +5,17 @@ import com.training.domain.Customer;
 import com.training.domain.dto.CustomerDto;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CustomerClientService {
 
-  private final static String BEARER = "Bearer";
+  private static final String BEARER = "Bearer";
 
   private final CustomerClient client;
   private final JwtService jwtService;
@@ -21,10 +23,11 @@ public class CustomerClientService {
   public Optional<Customer> getCustomerByEmail(String email) {
     String token = jwtService.createApiToken();
     Customer customer = null;
+
     try {
       customer = client.getCustomerByEmail(email, createAuthorizationHeader(token));
     } catch (FeignException ex) {
-      System.out.println(ex.getMessage());
+      log.error(ex.getMessage());
     }
     return Optional.ofNullable(customer);
   }
@@ -35,7 +38,7 @@ public class CustomerClientService {
     try {
       customer = client.createCustomer(customerDto, createAuthorizationHeader(token));
     } catch (FeignException ex) {
-      System.out.println(ex.getMessage());
+      log.error(ex.getMessage());
     }
     return Optional.ofNullable(customer);
   }

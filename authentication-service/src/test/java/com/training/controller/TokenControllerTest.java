@@ -25,13 +25,14 @@ import java.util.Optional;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
 @SpringBootTest
 class TokenControllerTest {
 
-  private final static String URL = "/account/token";
+  private static final String URL = "/account/token";
 
   private MockMvc mockMvc;
   @Autowired
@@ -62,6 +63,7 @@ class TokenControllerTest {
             .post(URL)
             .contentType(MediaType.APPLICATION_JSON)
             .content(new Gson().toJson(customer)))
+        .andDo(print())
         .andExpect(MockMvcResultMatchers.status().isCreated())
         .andExpect(MockMvcResultMatchers.jsonPath("$.access_token", Matchers.is(token)))
         .andExpect(MockMvcResultMatchers.jsonPath("$.token_type", Matchers.is("JWT")));

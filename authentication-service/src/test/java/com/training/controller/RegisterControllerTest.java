@@ -30,7 +30,7 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 @SpringBootTest
 class RegisterControllerTest {
 
-  private final static String URL = "/account/register";
+  private static final String URL = "/account/register";
 
   private MockMvc mockMvc;
   @Autowired

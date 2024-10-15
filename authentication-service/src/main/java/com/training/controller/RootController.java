@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class RootController {
 
-  private final static String STATUS_MESSAGE = "Authentication Service is up and running";
+  private static final String STATUS_MESSAGE = "Authentication Service is up and running";
 
   @GetMapping
   public ResponseEntity<String> getStatus() {

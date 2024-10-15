@@ -26,7 +26,7 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 @SpringBootTest
 class RootControllerTest {
 
-  private final static String URL = "/account";
+  private static final String URL = "/account";
 
   private MockMvc mockMvc;
   @Autowired

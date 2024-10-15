@@ -38,8 +38,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @SpringBootTest
 class EventControllerTest {
 
-  private final static String URL = "/api/events";
-  private final static Gson GSON = new GsonBuilder()
+  private static final String URL = "/api/events";
+  private static final Gson GSON = new GsonBuilder()
       .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
       .create();
   private MockMvc mockMvc;
