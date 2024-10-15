@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "REGISTRATIONS")
+@Table(name = "REGISTRATIONS", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"CUSTOMER_ID", "EVENT_ID"})
+})
 public class Registration {
 
   @Id
@@ -24,4 +26,9 @@ public class Registration {
   @ManyToOne
   @JoinColumn(name = "EVENT_ID")
   private Event event;
+
+  public Registration(Customer customer, Event event) {
+    this.customer = customer;
+    this.event = event;
+  }
 }
