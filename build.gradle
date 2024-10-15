@@ -1,0 +1,4 @@
+tasks.register('appStart') {
+    dependsOn 'data-service:bootRun'
+    dependsOn 'authentication-service:bootRun'
+}
