@@ -1,0 +1,21 @@
+services:
+  data-service:
+    context: .
+    build: data-service
+    ports:
+      - "8080:8080"
+    networks:
+      - api
+  authentication-service:
+    context: .
+    build: authentication-service
+    ports:
+      - "8081:8081"
+    networks:
+      - api
+
+networks:
+  api:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"
