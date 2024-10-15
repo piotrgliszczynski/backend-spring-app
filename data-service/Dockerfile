@@ -1,9 +1,6 @@
-FROM openjdk:21-jdk
+FROM gradle:8.6-jdk21
 WORKDIR /workspace/app
 
-COPY ../gradlew .
-COPY ../gradlew.bat .
-COPY ../gradle ./gradle
 COPY build.gradle .
 COPY settings.gradle .
 COPY src src
