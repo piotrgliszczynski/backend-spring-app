@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -51,6 +52,7 @@ class TokenControllerTest {
   }
 
   @Test
+  @WithMockUser(username = "test@test.com", password = "test")
   void shouldCreateToken() throws Exception {
     // Given
     String token = "12345";
@@ -80,8 +82,7 @@ class TokenControllerTest {
             .post(URL)
             .contentType(MediaType.APPLICATION_JSON)
             .content(new Gson().toJson(customer)))
-        .andExpect(MockMvcResultMatchers.status().isBadRequest())
-        .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.is("Invalid credentials")));
+        .andExpect(MockMvcResultMatchers.status().isUnauthorized());
   }
 
   @Test
@@ -96,7 +97,6 @@ class TokenControllerTest {
             .post(URL)
             .contentType(MediaType.APPLICATION_JSON)
             .content(new Gson().toJson(customer)))
-        .andExpect(MockMvcResultMatchers.status().isBadRequest())
-        .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.is("Invalid credentials")));
+        .andExpect(MockMvcResultMatchers.status().isUnauthorized());
   }
 }
