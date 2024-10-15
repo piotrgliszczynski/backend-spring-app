@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class EventMapperTest {
+class EventMapperTest {
 
   @Autowired
   private EventMapper mapper;

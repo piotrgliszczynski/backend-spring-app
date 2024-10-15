@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(classes = CustomerClientTest.FeignConfig.class)
 class CustomerClientTest {
 
-  private final static String TOKEN = "12345";
+  private static final String TOKEN = "12345";
 
   public static WireMockServer wireMockServer;
 

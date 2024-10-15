@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 @PropertySource("classpath:secure.properties")
 class JwtServiceTest {
 
-  private final static String USER = "test";
+  private static final String USER = "test";
 
   private String notExpired;
   private String expired;
@@ -102,9 +102,8 @@ class JwtServiceTest {
   }
 
   @Test
-  void verify_ShouldBeExpired() throws InterruptedException, ElementNotFoundException {
+  void verify_ShouldBeExpired() throws ElementNotFoundException {
     // Given
-    Thread.sleep(2);
     Customer userDetails = new Customer(USER, "test", "test");
     when(customerService.getCustomerByEmail(USER)).thenReturn(userDetails);
 
@@ -152,9 +151,8 @@ class JwtServiceTest {
   }
 
   @Test
-  void verifyExpiration_Expired() throws InterruptedException {
+  void verifyExpiration_Expired() {
     // Given
-    Thread.sleep(2);
 
     // When
     boolean valid = service.verifyExpiration(expired);

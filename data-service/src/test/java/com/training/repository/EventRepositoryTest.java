@@ -12,7 +12,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class EventRepositoryTest {
+class EventRepositoryTest {
 
   @Autowired
   private EventRepository repository;

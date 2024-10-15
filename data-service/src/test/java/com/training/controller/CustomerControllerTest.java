@@ -38,8 +38,8 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 @SpringBootTest
 class CustomerControllerTest {
 
-  private final static String URL = "/api/customers";
-  private final static Gson GSON = new GsonBuilder()
+  private static final String URL = "/api/customers";
+  private static final Gson GSON = new GsonBuilder()
       .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
       .create();
 

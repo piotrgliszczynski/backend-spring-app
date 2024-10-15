@@ -106,7 +106,7 @@ class RegistrationServiceTest {
   }
 
   @Test
-  void createRegistration_ShouldThrowWhenDuplicate() throws DuplicateElementsException {
+  void createRegistration_ShouldThrowWhenDuplicate() {
     // Given
     Registration registration = new Registration(customers.get(0), events.get(0));
     when(repository.save(registration)).thenThrow(DataIntegrityViolationException.class);

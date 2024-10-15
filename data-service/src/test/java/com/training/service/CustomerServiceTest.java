@@ -7,6 +7,9 @@ import com.training.repository.CustomerRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -28,47 +31,14 @@ class CustomerServiceTest {
   @Mock
   private CustomerRepository repository;
 
-  @Test
-  void getAllCustomers_WhenFilterNull() {
+  @ParameterizedTest
+  @NullAndEmptySource
+  @ValueSource(strings = {"test"})
+  void getAllCustomers_WhenFilterNull_Empty_Or_Partial(String filter) {
     // Given
     Customer customer1 = new Customer("test1@test.com", "test1", "test1");
     Customer customer2 = new Customer("test2@test.com", "test2", "test2");
     List<Customer> customers = List.of(customer1, customer2);
-    String filter = null;
-
-    when(repository.findAll()).thenReturn(customers);
-
-    // When
-    List<Customer> foundCustomers = service.getAllCustomers(filter);
-
-    // Then
-    assertEquals(customers, foundCustomers);
-  }
-
-  @Test
-  void getAllCustomers_WhenFilterEmpty() {
-    // Given
-    Customer customer1 = new Customer("test1@test.com", "test1", "test1");
-    Customer customer2 = new Customer("test2@test.com", "test2", "test2");
-    List<Customer> customers = List.of(customer1, customer2);
-    String filter = "";
-
-    when(repository.findAll()).thenReturn(customers);
-
-    // When
-    List<Customer> foundCustomers = service.getAllCustomers(filter);
-
-    // Then
-    assertEquals(customers, foundCustomers);
-  }
-
-  @Test
-  void getAllCustomers_WhenFilterPartial() {
-    // Given
-    Customer customer1 = new Customer("test1@test.com", "test1", "test1");
-    Customer customer2 = new Customer("test2@test.com", "test2", "test2");
-    List<Customer> customers = List.of(customer1, customer2);
-    String filter = "test";
 
     when(repository.findAll()).thenReturn(customers);
 

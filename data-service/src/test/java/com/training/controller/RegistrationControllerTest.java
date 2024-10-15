@@ -1,14 +1,11 @@
 package com.training.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.training.domain.Customer;
 import com.training.domain.Event;
 import com.training.domain.Registration;
 import com.training.domain.dto.EventDto;
 import com.training.domain.dto.RegistrationCustomerDto;
 import com.training.domain.dto.RegistrationDto;
-import com.training.mapper.LocalDateTimeTypeAdapter;
 import com.training.mapper.RegistrationMapper;
 import com.training.service.CustomerService;
 import com.training.service.EventService;
@@ -41,10 +38,7 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 @SpringBootTest
 class RegistrationControllerTest {
 
-  private final static String URL = "/api/registrations";
-  private final static Gson GSON = new GsonBuilder()
-      .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
-      .create();
+  private static final String URL = "/api/registrations";
 
   private MockMvc mockMvc;
   @Autowired

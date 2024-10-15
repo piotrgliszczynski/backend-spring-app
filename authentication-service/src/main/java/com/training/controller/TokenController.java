@@ -31,7 +31,7 @@ public class TokenController {
       String token = jwtService.createToken(customer);
       return ResponseEntity
           .status(HttpStatus.CREATED)
-          .body(new TokenDto(token));
+          .body(new TokenDto(token, "JWT"));
     }
 
     return ResponseEntity.badRequest().body("Invalid credentials");

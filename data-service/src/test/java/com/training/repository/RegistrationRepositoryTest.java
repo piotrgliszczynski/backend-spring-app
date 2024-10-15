@@ -16,7 +16,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class RegistrationRepositoryTest {
+class RegistrationRepositoryTest {
 
   @Autowired
   private RegistrationRepository repository;

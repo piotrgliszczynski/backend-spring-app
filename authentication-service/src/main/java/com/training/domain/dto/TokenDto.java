@@ -13,10 +13,8 @@ public class TokenDto {
 
   @JsonProperty("access_token")
   private final String token;
-
   @JsonProperty("token_type")
-  private final String type = "JWT";
-
+  private final String type;
   @JsonProperty("expires_in")
   @Value("${security.jwt.expiration-time}")
   private long expiration;

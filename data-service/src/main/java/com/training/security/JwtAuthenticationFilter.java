@@ -20,8 +20,8 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-  private final static String AUTHORIZATION_HEADER = "Authorization";
-  private final static String BEARER = "Bearer ";
+  private static final String AUTHORIZATION_HEADER = "Authorization";
+  private static final String BEARER = "Bearer ";
 
   private final JwtService jwtService;
   private final HandlerExceptionResolver exceptionResolver;
