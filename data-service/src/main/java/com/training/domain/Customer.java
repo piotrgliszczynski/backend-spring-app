@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,7 +32,22 @@ public class Customer {
   @Column(name = "PASSWORD")
   private String password;
 
+  @OneToMany(
+      targetEntity = Registration.class,
+      mappedBy = "customer",
+      cascade = CascadeType.REMOVE,
+      fetch = FetchType.LAZY
+  )
+  private List<Registration> registrations;
+
   public Customer(String email, String name, String password) {
+    this.email = email;
+    this.name = name;
+    this.password = password;
+  }
+
+  public Customer(Integer id, String email, String name, String password) {
+    this.id = id;
     this.email = email;
     this.name = name;
     this.password = password;
