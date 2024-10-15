@@ -1,6 +1,5 @@
 package com.training.service;
 
-import com.training.domain.Customer;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -22,10 +21,10 @@ public class JwtService {
   @Value("${auth.api.user}")
   private String apiUser;
 
-  public String createToken(Customer customer) {
+  public String createToken(String username) {
     return Jwts
         .builder()
-        .subject(customer.getEmail())
+        .subject(username)
         .issuedAt(new Date(System.currentTimeMillis()))
         .expiration(new Date(System.currentTimeMillis() + jwtExpiration))
         .signWith(getSignInKey())

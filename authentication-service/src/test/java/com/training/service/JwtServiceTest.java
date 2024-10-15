@@ -35,7 +35,7 @@ class JwtServiceTest {
     Customer customer = new Customer("test@test.com", "test");
 
     // When
-    String token = service.createToken(customer);
+    String token = service.createToken(customer.getEmail());
     Claims payload = Jwts.parser()
         .verifyWith(getSignInKey())
         .build()
