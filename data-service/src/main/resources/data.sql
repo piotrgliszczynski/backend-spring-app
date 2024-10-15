@@ -10,6 +10,13 @@ CREATE TABLE CUSTOMERS (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE EVENTS (
+    id	INT NOT NULL,
+    name	VARCHAR(512),
+    date	timestamp,
+    PRIMARY KEY (id)
+);
+
 INSERT INTO CUSTOMERS (id, name, email, password) VALUES ('0', 'Mary Jackson', 'maryj@abc.com', 'maryj');
 INSERT INTO CUSTOMERS (id, name, email, password) VALUES ('1', 'Karen Addams', 'karena@abc.com', 'karena');
 INSERT INTO CUSTOMERS (id, name, email, password) VALUES ('2', 'Scott Ramsey', 'scottr@abc.com', 'scottr');
@@ -114,3 +121,54 @@ INSERT INTO CUSTOMERS (id, name, email, password) VALUES ('100', 'Thia Cromer', 
 INSERT INTO CUSTOMERS (id, name, email, password) VALUES ('101', 'Jesus Ianiello', 'jianiello2q@microsoft.com', 'gB3<uJ1w');
 INSERT INTO CUSTOMERS (id, name, email, password) VALUES ('102', 'Stan Mulcock', 'smulcock2r@uiuc.edu', 'oX0<Dj)');
 INSERT INTO CUSTOMERS (id, name, email, password) VALUES ('103', 'admin', 'admin@test.com', 'admin');
+
+insert into EVENTS (id, name, date) values (1, 'eget congue eget semper', {ts '2025-09-26 15:55:29'});
+insert into EVENTS (id, name, date) values (2, 'mattis pulvinar nulla', {ts '2025-12-03 21:41:30'});
+insert into EVENTS (id, name, date) values (3, 'augue quam sollicitudin', {ts '2026-04-19 05:36:11'});
+insert into EVENTS (id, name, date) values (4, 'scelerisque quam turpis', {ts '2025-11-26 08:41:03'});
+insert into EVENTS (id, name, date) values (5, 'eu est', {ts '2026-04-12 22:53:47'});
+insert into EVENTS (id, name, date) values (6, 'curae duis faucibus accumsan', {ts '2025-04-15 11:33:48'});
+insert into EVENTS (id, name, date) values (7, 'ut massa', {ts '2025-02-24 23:49:15'});
+insert into EVENTS (id, name, date) values (8, 'risus semper porta volutpat', {ts '2026-04-29 00:58:32'});
+insert into EVENTS (id, name, date) values (9, 'amet consectetuer adipiscing', {ts '2025-11-07 09:06:22'});
+insert into EVENTS (id, name, date) values (10, 'enim sit amet nunc', {ts '2026-01-08 17:31:27'});
+insert into EVENTS (id, name, date) values (11, 'at dolor quis odio', {ts '2025-10-10 00:51:55'});
+insert into EVENTS (id, name, date) values (12, 'quisque erat eros', {ts '2025-04-20 13:53:10'});
+insert into EVENTS (id, name, date) values (13, 'molestie hendrerit', {ts '2026-01-30 15:35:24'});
+insert into EVENTS (id, name, date) values (14, 'imperdiet et commodo', {ts '2025-04-06 19:21:47'});
+insert into EVENTS (id, name, date) values (15, 'phasellus id sapien', {ts '2025-08-14 23:03:33'});
+insert into EVENTS (id, name, date) values (16, 'ut dolor morbi', {ts '2025-03-12 05:21:54'});
+insert into EVENTS (id, name, date) values (17, 'eget tempus', {ts '2025-07-10 05:30:24'});
+insert into EVENTS (id, name, date) values (18, 'aliquam convallis nunc', {ts '2026-04-29 06:22:55'});
+insert into EVENTS (id, name, date) values (19, 'pharetra magna vestibulum', {ts '2025-12-02 09:51:50'});
+insert into EVENTS (id, name, date) values (20, 'eu sapien cursus vestibulum', {ts '2025-05-26 23:56:27'});
+insert into EVENTS (id, name, date) values (21, 'pede justo', {ts '2025-01-07 13:09:51'});
+insert into EVENTS (id, name, date) values (22, 'elementum in', {ts '2024-12-31 02:04:44'});
+insert into EVENTS (id, name, date) values (23, 'vel enim', {ts '2025-08-12 13:53:39'});
+insert into EVENTS (id, name, date) values (24, 'libero non mattis', {ts '2026-05-06 19:12:56'});
+insert into EVENTS (id, name, date) values (25, 'tempus vivamus in', {ts '2025-05-16 21:04:49'});
+insert into EVENTS (id, name, date) values (26, 'vestibulum sit', {ts '2025-01-05 04:52:52'});
+insert into EVENTS (id, name, date) values (27, 'elementum nullam varius', {ts '2025-09-21 20:05:08'});
+insert into EVENTS (id, name, date) values (28, 'ut tellus', {ts '2026-03-26 02:55:57'});
+insert into EVENTS (id, name, date) values (29, 'purus aliquet at feugiat', {ts '2025-10-20 05:36:01'});
+insert into EVENTS (id, name, date) values (30, 'donec ut mauris', {ts '2025-09-21 14:24:03'});
+insert into EVENTS (id, name, date) values (31, 'semper rutrum', {ts '2025-05-07 14:56:33'});
+insert into EVENTS (id, name, date) values (32, 'sed interdum venenatis turpis', {ts '2026-05-09 00:06:56'});
+insert into EVENTS (id, name, date) values (33, 'semper sapien a', {ts '2025-09-06 02:01:32'});
+insert into EVENTS (id, name, date) values (34, 'placerat ante nulla', {ts '2024-12-30 10:37:14'});
+insert into EVENTS (id, name, date) values (35, 'vitae nisi', {ts '2025-12-10 16:43:30'});
+insert into EVENTS (id, name, date) values (36, 'non quam nec', {ts '2026-04-14 17:26:51'});
+insert into EVENTS (id, name, date) values (37, 'in lacus curabitur', {ts '2026-04-27 20:31:02'});
+insert into EVENTS (id, name, date) values (38, 'a nibh in', {ts '2025-07-11 03:59:26'});
+insert into EVENTS (id, name, date) values (39, 'sed augue', {ts '2025-02-19 20:53:28'});
+insert into EVENTS (id, name, date) values (40, 'pellentesque ultrices mattis', {ts '2025-09-24 11:36:42'});
+insert into EVENTS (id, name, date) values (41, 'ante ipsum primis', {ts '2026-02-04 19:47:46'});
+insert into EVENTS (id, name, date) values (42, 'est quam pharetra', {ts '2026-04-04 05:11:22'});
+insert into EVENTS (id, name, date) values (43, 'ultrices mattis', {ts '2024-12-10 23:51:47'});
+insert into EVENTS (id, name, date) values (44, 'praesent id massa id', {ts '2026-03-22 17:36:10'});
+insert into EVENTS (id, name, date) values (45, 'pede posuere nonummy', {ts '2025-01-24 15:06:34'});
+insert into EVENTS (id, name, date) values (46, 'congue diam id ornare', {ts '2026-01-08 07:08:23'});
+insert into EVENTS (id, name, date) values (47, 'pede venenatis', {ts '2025-02-11 12:35:47'});
+insert into EVENTS (id, name, date) values (48, 'et commodo', {ts '2026-04-13 01:12:57'});
+insert into EVENTS (id, name, date) values (49, 'id massa id', {ts '2025-11-04 05:02:59'});
+insert into EVENTS (id, name, date) values (50, 'aliquam lacus morbi', {ts '2025-06-14 13:55:39'});
