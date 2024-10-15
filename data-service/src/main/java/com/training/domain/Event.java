@@ -24,4 +24,9 @@ public class Event {
 
   @Column(name = "DATE")
   private LocalDateTime date;
+
+  public Event(String name, LocalDateTime date) {
+    this.name = name;
+    this.date = date;
+  }
 }
