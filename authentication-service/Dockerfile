@@ -5,4 +5,4 @@ COPY build.gradle .
 COPY src src
 
 RUN gradle build
-ENTRYPOINT ["ls", "-R"]
+ENTRYPOINT ["java","-jar","build/libs/authentication-service-1.0-SNAPSHOT.jar"]
