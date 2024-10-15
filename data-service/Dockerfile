@@ -5,4 +5,4 @@ COPY build.gradle .
 COPY src src
 
 RUN gradle build
-ENTRYPOINT ["ls", "build/libs"]
+ENTRYPOINT ["java","-jar","build/libs/data-service-1.0-SNAPSHOT.jar"]
