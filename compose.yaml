@@ -1,14 +1,12 @@
 services:
   data-service:
-    context: .
-    build: data-service
+    build: ./data-service
     ports:
       - "8080:8080"
     networks:
       - api
   authentication-service:
-    context: .
-    build: authentication-service
+    build: ./authentication-service
     ports:
       - "8081:8081"
     networks:
