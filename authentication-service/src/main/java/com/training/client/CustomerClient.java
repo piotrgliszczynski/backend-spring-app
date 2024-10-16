@@ -6,7 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 
-@FeignClient(name = "data-service", url = "data-service")
+@FeignClient(name = "data-service", url = "data-service:8080")
 public interface CustomerClient {
 
   @GetMapping("/api/customers/{email}")
