@@ -30,7 +30,8 @@ class CustomerClientTest {
 
   @BeforeAll
   static void wiremockStart() {
-    wireMockServer = new WireMockServer(options().port(8080));
+    wireMockServer = new WireMockServer(options()
+        .port(8080));
     wireMockServer.start();
   }
 
