@@ -5,6 +5,8 @@ services:
       - "8080:8080"
     networks:
       - api
+    environment:
+      - DATA_SERVICE_URL=http://data-service:8080
   authentication-service:
     build: ./authentication-service
     ports:
