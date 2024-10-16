@@ -25,7 +25,7 @@ const AddUpdateForm = () => {
   }
 
   const fetchRegistrations = async () => {
-    getAllByCustomer(user).then(response => setRegistrations(response));
+    getAllByCustomer(customerData.id, user).then(response => setRegistrations(response));
   }
 
   useEffect(() => {

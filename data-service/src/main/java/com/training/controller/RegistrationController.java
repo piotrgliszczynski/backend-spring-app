@@ -28,11 +28,10 @@ public class RegistrationController {
   private final EventService eventService;
   private final RegistrationMapper registrationMapper;
 
-  @GetMapping("/customer")
+  @GetMapping("/customer/{customerId}")
   public ResponseEntity<List<RegistrationDto>> getRegistrationsByCustomer(
-      Authentication authentication) throws ElementNotFoundException {
-    Customer customer = customerService.getCustomerByEmail(authentication.getName());
-    List<Registration> registrations = registrationService.findAllByCustomerId(customer.getId());
+      @PathVariable int customerId) {
+    List<Registration> registrations = registrationService.findAllByCustomerId(customerId);
     List<RegistrationDto> registrationDtos = registrationMapper.mapToDtoList(registrations);
     return ResponseEntity.ok(registrationDtos);
   }

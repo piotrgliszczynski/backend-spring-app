@@ -41,9 +41,9 @@ export const getAllByEvent = async (event, token) => {
   }
 };
 
-export const getAllByCustomer = async (token) => {
+export const getAllByCustomer = async (customerId, token) => {
   try {
-    const response = await fetch(`${DATA_API_URL}/${EVENTS_ENDPOINT}/customer`,
+    const response = await fetch(`${DATA_API_URL}/${EVENTS_ENDPOINT}/customer/${customerId}`,
       {
         headers: { 'Authorization': `Bearer ${token}` }
       });
