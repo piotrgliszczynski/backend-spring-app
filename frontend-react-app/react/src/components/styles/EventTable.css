@@ -1,0 +1,64 @@
+.selected {
+  font-weight: bold;
+}
+
+.table-container {
+  margin: 10px;
+}
+
+#event-table {
+  margin: 0;
+  background-color: #F3EEEA;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-y: scroll;
+  width: 100%;
+}
+
+tbody {
+  display: block;
+  height: 335px;
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scrollbar-width: 1em;
+}
+
+thead,
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+table,
+td,
+tr {
+  border: 1.3px solid #776B5D;
+  border-collapse: collapse;
+  padding: 5px;
+}
+
+td,
+th {
+  overflow-wrap: anywhere;
+}
+
+thead {
+  width: calc(100% - 17px);
+  background-color: #776B5D;
+  color: #181513;
+}
+
+#event-table>thead>tr>th {
+  margin: 0;
+  padding: 5px;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid #aaa;
+}
+
+tbody>tr:hover {
+  background-color: #EBE3D5;
+  cursor: pointer;
+}

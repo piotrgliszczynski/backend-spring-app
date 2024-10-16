@@ -1,0 +1,15 @@
+.customer-list {
+  width: auto;
+  background-color: #B0A695;
+  border: 1.5px solid #aaa;
+  border-radius: 5px;
+  padding: 5px;
+  padding-top: 0px;
+  margin: 50px 20px;
+}
+
+.list-heading {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
