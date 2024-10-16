@@ -1,0 +1,23 @@
+.btn {
+  height: 37px;
+  width: 75px;
+  border-radius: 50px 50px;
+  border: none;
+  margin: 0 20px;
+
+  font-weight: bold;
+  color: #EBE3D5;
+  text-transform: uppercase;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #776B5D;
+  box-shadow: 1px 1px 10px 1px #a0978e;
+}
+
+.btn:hover {
+  cursor: pointer;
+  background-color: #6b6054;
+}

@@ -1,4 +1,21 @@
 tasks.register('appStart') {
     dependsOn 'data-service:bootRun'
     dependsOn 'authentication-service:bootRun'
+    dependsOn 'npmRunDev'
+}
+
+tasks.register('npmInstall', Exec) {
+    workingDir './frontend-react-app/react'
+    commandLine 'npm.cmd', 'install'
+}
+
+tasks.register('npmRunDev', Exec) {
+    dependsOn 'npmInstall'
+    workingDir './frontend-react-app/react'
+    commandLine 'npm.cmd', 'run', 'dev'
+    finalizedBy 'npmKill'
+}
+
+tasks.register('npmKill', Exec) {
+    commandLine 'taskkill', '/f', '/im', 'node.exe'
 }

@@ -100,13 +100,12 @@ class RegistrationControllerTest {
         new RegistrationDto(2, customersDto.get(0), eventsDto.get(1));
     List<RegistrationDto> registrationDtos = List.of(registrationDto1, registrationDto2);
 
-    when(customerService.getCustomerByEmail(customer.getEmail())).thenReturn(customer);
     when(registrationService.findAllByCustomerId(customer.getId())).thenReturn(registrations);
     when(registrationMapper.mapToDtoList(registrations)).thenReturn(registrationDtos);
 
     // When + Then
     mockMvc.perform(MockMvcRequestBuilders
-            .get(URL + "/customer"))
+            .get(URL + "/customer/" + customer.getId()))
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(2)));
   }
