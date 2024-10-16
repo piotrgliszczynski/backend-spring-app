@@ -5,6 +5,7 @@ build/
 !**/src/test/**/build/
 **/secure.properties
 **/local*
+**/network*
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
