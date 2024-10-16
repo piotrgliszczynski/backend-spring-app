@@ -1,0 +1,19 @@
+services:
+  data-service:
+    build: ./data-service
+    ports:
+      - "8080:8080"
+    networks:
+      - api
+  authentication-service:
+    build: ./authentication-service
+    ports:
+      - "8081:8081"
+    networks:
+      - api
+
+networks:
+  api:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.host_binding_ipv4: "localhost"

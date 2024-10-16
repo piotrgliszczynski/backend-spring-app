@@ -5,7 +5,10 @@ import com.training.domain.dto.CustomerDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "data-service", url = "http://localhost:8080")
+
+@FeignClient(
+    name = "data-service",
+    url = "${spring.cloud.openfeign.client.config.data-service.url}")
 public interface CustomerClient {
 
   @GetMapping("/api/customers/{email}")
@@ -16,3 +19,4 @@ public interface CustomerClient {
   CustomerDto createCustomer(@RequestBody CustomerDto customerDto,
                              @RequestHeader("Authorization") String token);
 }
+

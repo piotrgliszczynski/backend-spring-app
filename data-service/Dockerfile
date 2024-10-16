@@ -1,12 +1,9 @@
-FROM openjdk:21-jdk
-WORKDIR /workspace/app
+FROM gradle:8.6-jdk21
+WORKDIR /workspace/data-service
 
-COPY ../gradlew .
-COPY ../gradlew.bat .
-COPY ../gradle ./gradle
 COPY build.gradle .
-COPY settings.gradle .
 COPY src src
 
-RUN ./gradlew build
+RUN gradle build
+EXPOSE 8080
 ENTRYPOINT ["java","-jar","build/libs/data-service-1.0-SNAPSHOT.jar"]
