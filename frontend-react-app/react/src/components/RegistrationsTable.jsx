@@ -6,21 +6,25 @@ const EventTable = ({ type, fetchRegistrations, registrations }) => {
   const { user } = useAuth();
 
   const createHeaders = () => {
-    if (registrations.length > 0) {
+  console.log(registrations);
+      if (!registrations || !registrations.length > 0) {
+        return <td></td>;
+      }
       return Object.keys(registrations[0][type])
         .map(value => (
           <td key={value}>{value.toUpperCase()}</td>
         ));
-    }
-    return <td></td>;
   }
 
   const createBody = () => {
-    return registrations.map(registration => <tr key={registration.id}>{
-      Object.keys(registration[type]).map((key, index) => (
-        <td key={index}>{registration[type][key]}</td>
-      ))
-    }</tr>);
+      if (registrations) {
+        return registrations.map(registration => <tr key={registration.id}>{
+          Object.keys(registration[type]).map((key, index) => (
+            <td key={index}>{registration[type][key]}</td>
+          ))
+        }</tr>);
+    }
+    return <tr></tr>;
   }
 
   useEffect(() => {

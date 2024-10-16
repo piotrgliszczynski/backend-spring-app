@@ -4,11 +4,12 @@ const REGISTER_ENDPOINT = "account/register";
 
 export const getToken = async (customer) => {
   try {
+    const customerCredentials = `${customer.email}:${customer.password}`;
+    const encodedCredentials = window.btoa(customerCredentials);
     const response = await fetch(`${AUTHENTICATION_API_URL}/${LOGIN_ENDPOINT}`,
       {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(customer)
+        headers: { 'Authorization': `Basic ${encodedCredentials}` }
       });
 
     if (!response.ok) {
@@ -32,7 +33,7 @@ export const register = async (customer) => {
       });
 
     if (!response.ok) {
-      throw new Error(`Could not regsiter new user!`);
+      throw new Error(`Could not register new user!`);
     }
 
     const responseJson = await response.json();

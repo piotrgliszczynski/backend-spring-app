@@ -13,6 +13,7 @@ const AddUpdateForm = () => {
   const { customer, emptyCustomer } = useCustomer();
   const { user } = useAuth();
   const [customerData, setCustomerData] = useState(customer);
+  const [registrations, setRegistrations] = useState([]);
 
   const onType = (field, event) => {
     setCustomerData(
@@ -24,7 +25,7 @@ const AddUpdateForm = () => {
   }
 
   const fetchRegistrations = async () => {
-    return await getAllByCustomer(user);
+    getAllByCustomer(user).then(response => setRegistrations(response));
   }
 
   useEffect(() => {
@@ -63,7 +64,7 @@ const AddUpdateForm = () => {
         </div>
       </div>
       {(customerData.id !== emptyCustomer.id) && (<div>
-        <RegistrationsTable type='event' fetchRegistrations={fetchRegistrations} />
+        <RegistrationsTable type='event' fetchRegistrations={fetchRegistrations} registrations={registrations} />
       </div>)}
     </div >
   )
