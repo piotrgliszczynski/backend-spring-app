@@ -6,7 +6,8 @@ import com.google.gson.Gson;
 import com.training.domain.Customer;
 import com.training.domain.dto.CustomerDto;
 import feign.FeignException;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +24,21 @@ class CustomerClientTest {
 
   private static final String TOKEN = "12345";
 
-  public static WireMockServer wireMockServer;
+  public WireMockServer wireMockServer;
 
   @Autowired
   private CustomerClient client;
 
-  @BeforeAll
-  static void wiremockStart() {
+  @BeforeEach
+  void wiremockStart() {
     wireMockServer = new WireMockServer(options()
         .port(8080));
     wireMockServer.start();
+  }
+
+  @AfterEach
+  void stopWireMock() {
+    wireMockServer.stop();
   }
 
   @Test
